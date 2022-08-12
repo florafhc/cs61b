@@ -12,14 +12,14 @@ public class ArrayDeque<T>{
     }
 
     /** return the previous/next index in the circular array */
-    public int minusOne(int index){
+    private int minusOne(int index){
         index = index - 1;
         if (index < 0){
             index = items.length - 1;
         }
         return index;
     }
-    public int plusOne(int index){
+    private int plusOne(int index){
         index = index + 1;
         if (index >= items.length){
             index = 0;
@@ -28,16 +28,16 @@ public class ArrayDeque<T>{
     }
 
     /** Resize array */
-    public void resize(int tar_length){
+    private void resize(int tar_length){
         T[] a = (T[]) new Object[tar_length];
-        for (int i = 1; i <= size; i += 1) {
+        for (int i = 0; i < size; i += 1) {
             int start = plusOne(nextFirst);
             a[i] = items[start];
             start = plusOne(start);
         }
         items = a;
-        nextFirst = 0;
-        nextLast = size + 1;
+        nextFirst = a.length - 1;
+        nextLast = size;
     }
 
     /** Add an item of type T to the front of the deque */
@@ -90,53 +90,72 @@ public class ArrayDeque<T>{
     /** Remove and return the item at the front of the deque.
      * If no such item exists, return null. */
     public T removeFirst(){
-        T remove;
-        remove = items[plusOne(nextFirst)];
-        nextFirst = plusOne(nextFirst);
-        size = size - 1;
-        double ratio = size / items.length;
-        if (ratio < 0.25 && items.length >= 16){
-            resize(items.length / 2);
+        if (isEmpty()){
+            return null;
+        }else{
+            T remove;
+            remove = items[plusOne(nextFirst)];
+            nextFirst = plusOne(nextFirst);
+            size = size - 1;
+            double ratio = size / items.length;
+            if (ratio < 0.25 && items.length >= 16){
+                resize(items.length / 2);
+            }
+            return remove;
         }
-        return remove;
+
     }
 
     /** Remove and return the item at the last of the deque.
      * If no such item exists, return null. */
     public T removeLast(){
-        T remove;
-        remove = items[minusOne(nextLast)];
-        nextLast = minusOne(nextLast);
-        size = size - 1;
-        double ratio = size / items.length;
-        if (ratio < 0.25 && items.length >= 16){
-            resize(items.length / 2);
+        if (isEmpty()){
+            return null;
+        }else{
+            T remove;
+            remove = items[minusOne(nextLast)];
+            nextLast = minusOne(nextLast);
+            size = size - 1;
+            double ratio = size / items.length;
+            if (ratio < 0.25 && items.length >= 16){
+                resize(items.length / 2);
+            }
+            return remove;
         }
-        return remove;
+
     }
 
     /** Get the item at the given index, where 0 is the front, 1 is the next.
      * If no such item exists, returns null.*/
     public T get(int index){
-        int point = plusOne(nextFirst);
-        for (int i = 0; i < index; i += 1){
-            point = plusOne(point);
+        if (index > size - 1){
+            return null;
+        }else {
+            int point = plusOne(nextFirst);
+            for (int i = 0; i < index; i += 1){
+                point = plusOne(point);
+            }
+            return items[point];
         }
-        return items[point];
+
     }
 
-    /**
+
     public static void main(String[] args){
         ArrayDeque L = new ArrayDeque();
-        L.addFirst(2);
-        L.addLast(3);
+        for (int i = 0; i < 8; i++){
+            L.addLast(i);
+        }
         // L.removeFirst();
-        L.removeLast();
+        // L.removeLast();
+        System.out.println(L.get(3));
         L.printDeque();
-        //System.out.println(L.get(1));
+        L.resize(16);
+        L.resize(8);
+
 
 
     }
-    */
+
 
 }
