@@ -29,15 +29,13 @@ public class ArrayDeque<T> {
 
     /** Check whether the array need to be shrank */
     private boolean checkResize() {
-        if (size * 4 <= items.length && items.length >= 16) {
-            return true;
-        } else {
-            return false;
-        }
+        return size * 4 <= items.length && items.length >= 16;
+
     }
+
     /** Resize array */
-    private void resize(int tar_length) {
-        T[] a = (T[]) new Object[tar_length];
+    private void resize(int tarLength) {
+        T[] a = (T[]) new Object[tarLength];
         int start = plusOne(nextFirst);
         for (int i = 0; i < size; i += 1) {
             a[i] = items[start];
@@ -147,27 +145,5 @@ public class ArrayDeque<T> {
         }
 
     }
-
-
-    public static void main(String[] args) {
-        ArrayDeque L = new ArrayDeque();
-        for (int i = 0; i < 20; i++) {
-            L.addLast(i);
-        }
-        for (int i = 0; i < 20; i++) {
-            L.removeLast();
-        }
-        for (int i = 0; i < 20; i++) {
-            L.addLast(i);
-        }
-        L.removeFirst();
-        L.removeLast();
-        System.out.println(L.get(3));
-        L.printDeque();
-
-
-
-    }
-
-
+    
 }
