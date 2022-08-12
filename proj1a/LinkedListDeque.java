@@ -140,6 +140,7 @@ public class LinkedListDeque<T> {
         }
     }
 
+    /**
     public static void main(String[] args){
         LinkedListDeque L = new LinkedListDeque();
         L.addFirst(1);
@@ -151,4 +152,5 @@ public class LinkedListDeque<T> {
         System.out.println(L.size());
         L.printDeque();
     }
+     */
 }
