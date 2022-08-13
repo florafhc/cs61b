@@ -34,15 +34,15 @@ public class TestPalindrome {
     public void testIsPalindromeNew() {
         CharacterComparator offByOne = new OffByOne();
         String input1 = "";
-        assertTrue(palindrome.isPalindrome(input1, OffByOne));
+        assertTrue(palindrome.isPalindrome(input1, offByOne));
 
         String input2 = "a";
-        assertTrue(palindrome.isPalindrome(input2, OffByOne));
+        assertTrue(palindrome.isPalindrome(input2, offByOne));
 
         String input3 = "flake";
-        assertTrue(palindrome.isPalindrome(input3, OffByOne));
+        assertTrue(palindrome.isPalindrome(input3, offByOne));
 
         String input4 = "aa";
-        assertFalse(palindrome.isPalindrome(input4, OffByOne));
+        assertFalse(palindrome.isPalindrome(input4, offByOne));
     }
 }
