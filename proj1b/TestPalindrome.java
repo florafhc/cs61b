@@ -32,7 +32,7 @@ public class TestPalindrome {
 
     @Test
     public void testIsPalindromeNew() {
-        CharacterComparator OffByOne = new OffByOne();
+        CharacterComparator offByOne = new OffByOne();
         String input1 = "";
         assertTrue(palindrome.isPalindrome(input1, OffByOne));
 
