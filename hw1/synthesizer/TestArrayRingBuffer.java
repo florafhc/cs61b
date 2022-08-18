@@ -32,6 +32,16 @@ public class TestArrayRingBuffer {
         remove2 = arb.peek();
         assertEquals(1, remove1);
         assertEquals(2, remove2);
+
+        for (int i = 0; i < 4; i++) {
+            arb.dequeue();
+        }
+
+        try {
+            arb.dequeue();
+        } catch (Exception e) {
+            System.out.println("generate correct exception2!");
+        }
         //ArrayRingBuffer arb = new ArrayRingBuffer(10);
 
 
