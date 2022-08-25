@@ -27,10 +27,9 @@ public class ArrayDeque<T> {
         return index;
     }
 
-    /** Check whether the array need to be shrank */
+    /** Check whether the array need to be shrunk */
     private boolean checkResize() {
         return size * 4 <= items.length && items.length >= 16;
-
     }
 
     /** Resize array */
@@ -72,13 +71,8 @@ public class ArrayDeque<T> {
 
     /** Return true if deque is empty, false otherwise */
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (size == 0);
     }
-
     /** Return the number of items in the deque */
     public int size() {
         return size;
@@ -145,5 +139,5 @@ public class ArrayDeque<T> {
         }
 
     }
-    
+
 }
