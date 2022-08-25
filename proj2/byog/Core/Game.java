@@ -2,12 +2,14 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int HEIGHT = 50;
+
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -32,7 +34,47 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
-        TETile[][] finalWorldFrame = null;
+        // initialize the tile
+        //ter.initialize(WIDTH, HEIGHT);
+        TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
+        tileInitialize(finalWorldFrame);
+
+        // generate the map
+        long seed = seedSeeker(input);
+        MapGenerator map = new MapGenerator(seed);
+        TETile type = Tileset.WALL;
+        map.mapPrint(finalWorldFrame, type);
+
+        // ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
     }
+
+    /** Extract the seed number from a given string */
+    private long seedSeeker(String input) {
+        int strLength = input.length();
+        long seed = 0;
+        for (int i = 0; i < strLength; i += 1) {
+            if (input.charAt(i) >= '0' & input.charAt(i) <= '9') {
+                int num = input.charAt(i) - '0';
+                seed = seed * 10 + num;
+            } else {
+                continue;
+            }
+        }
+        return seed;
+    }
+    /** Initialize the tile with Tileset.NOTHING */
+    private void tileInitialize(TETile[][] Tile) {
+        for (int i = 0; i < WIDTH; i += 1) {
+            for (int j = 0; j < HEIGHT; j += 1) {
+                Tile[i][j] = Tileset.NOTHING;
+            }
+        }
+    }
+    /**
+    public static void main(String[] args) {
+        Game g = new Game();
+        g.playWithInputString("N123ss");
+    }
+     */
 }
