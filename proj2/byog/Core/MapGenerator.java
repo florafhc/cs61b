@@ -14,7 +14,7 @@ public class MapGenerator {
     private Random r;
     private int count;
     private int roomNum;
-    private long roomSeed; // track the seed generating the
+    private long roomSeed; // track the seed generating the room
     private Room[] roomList;
     public MapGenerator(long s) {
         seed = s;

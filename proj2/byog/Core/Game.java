@@ -4,6 +4,11 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.Color;
+import java.awt.Font;
+
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
@@ -15,6 +20,85 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        mainMenu();
+        modeSelection();
+    }
+
+    /** Initialize and display title and instructions of the game */
+    private void mainMenu() {
+        ter.initialize(WIDTH, HEIGHT);
+        textPrint("CS61B proj2", WIDTH / 2, HEIGHT * 7 / 10, 60);
+        textPrint("New Game(N) Load Game(L)  Quit(Q)", WIDTH / 2, HEIGHT / 4, 25 );
+    }
+    /** Print text with given size at given position (x, y) */
+    private void textPrint(String text, int x, int y, int size) {
+        Font titleFont = new Font("Monaco", Font.BOLD, size);
+        StdDraw.setFont(titleFont);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.text(x, y, text);
+        StdDraw.show();
+    }
+    private void modeSelection(){
+        String mode = solicitNCharsInput(1);
+        while (!mode.equals("N")  & !mode.equals("L") & !mode.equals("Q")) {
+            textPrint("Please select a mode according to instruction!", WIDTH / 2, HEIGHT / 5, 20);
+            mode = solicitNCharsInput(1);
+        }
+        switch (mode) {
+            case "N":
+                newGame();
+        }
+    }
+    /** Set the operation of pressing "N" to start a new game and print the new map */
+    private void newGame() {
+        drawNewGame();
+        long seed = solicitSeedInput();
+
+        TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
+        tileInitialize(finalWorldFrame);
+        mapGenerator(finalWorldFrame, seed, Tileset.WALL);
+        ter.renderFrame(finalWorldFrame);
+    }
+    /** Draw the UI interface for a new game */
+    private void drawNewGame() {
+        StdDraw.clear(StdDraw.BLACK);
+        textPrint("Enter a number: (End your input with \'S\')", 40, 25, 30);
+        StdDraw.show();
+    }
+
+    /** Return the seed input by the player */
+    private long solicitSeedInput() {
+        String letter = solicitNCharsInput(1);
+        long seed = 0;
+        while(!letter.equals("S")) {
+            char x = letter.charAt(0);
+            if (x >= 'A' & x <= 'Z') {
+                textPrint("Please input number or \"S\" to end your typing!", 40, 20, 20);
+                letter = solicitNCharsInput(1);
+                continue;
+            }
+            drawNewGame();
+            int num = Integer.valueOf(letter);
+            seed = seed * 10 + num;
+            textPrint("Your input: " + String.valueOf(seed), WIDTH / 2, 20, 20);
+            letter = solicitNCharsInput(1);
+        }
+        return seed;
+    }
+    /** Solicit n input of the user */
+    private String solicitNCharsInput(int n) {
+        int count = 0;
+        String input = new String("");
+        while (count < n) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char letter = StdDraw.nextKeyTyped();
+            input = input + letter;
+            count += 1;
+        }
+        input = input.toUpperCase();
+        return input;
     }
 
     /**
@@ -35,17 +119,15 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
 
         // initialize the tile
-        //ter.initialize(WIDTH, HEIGHT);
+        ter.initialize(WIDTH, HEIGHT);
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
         tileInitialize(finalWorldFrame);
 
         // generate the map
         long seed = seedSeeker(input);
-        MapGenerator map = new MapGenerator(seed);
-        TETile type = Tileset.WALL;
-        map.mapPrint(finalWorldFrame, type);
+        mapGenerator(finalWorldFrame, seed, Tileset.WALL);
 
-        // ter.renderFrame(finalWorldFrame);
+        ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
     }
 
@@ -71,10 +153,15 @@ public class Game {
             }
         }
     }
-    /**
+
+    /** Print the map with given seed and type  */
+    private void mapGenerator(TETile[][] Tile, long seed, TETile type) {
+        MapGenerator map = new MapGenerator(seed);
+        map.mapPrint(Tile, type);
+    }
     public static void main(String[] args) {
         Game g = new Game();
-        g.playWithInputString("N123ss");
+        g.playWithKeyboard();
     }
-     */
+
 }

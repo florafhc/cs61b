@@ -5,7 +5,7 @@ import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
 
-/** */
+/** This class is to */
 public class LHall {
     private int startX, startY, endX, endY;
     private int length;
@@ -51,6 +51,7 @@ public class LHall {
 
     }
 
+    /** Print shape L with TETile type given start and end point */
     private void printL(TETile[][] tiles, TETile type, int sX, int sY, int eX, int eY) {
         int x1 = Math.min(sX, eX);
         int x2 = Math.max(sX, eX);
