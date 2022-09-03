@@ -17,8 +17,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private ArrayMap<K, V>[] buckets;
     private int size;
 
-    private int loadFactor() {
-        return size / buckets.length;
+    private double loadFactor() {
+        return (double)size / buckets.length;
     }
 
     public MyHashMap() {
@@ -53,19 +53,40 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int hashCode = hash(key);
+        return buckets[hashCode].get(key);
+
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        int hashCode = hash(key);
+        int oldLength = buckets[hashCode].size();
+        buckets[hashCode].put(key, value);
+        int newLength = buckets[hashCode].size();
+        size += newLength - oldLength;
+        double loadFactor = loadFactor();
+
+        if (loadFactor > MAX_LF) {
+            ArrayMap<K, V>[] point = buckets;
+            buckets = new ArrayMap[buckets.length * 2];
+            clear();
+            for (int i = 0; i < point.length; i += 1) {
+                Iterator<K> keyIter = point[i].keySet().iterator();
+                while (keyIter.hasNext()) {
+                    K keyVal = keyIter.next();
+                    V valueVal =point[i].get(keyVal);
+                    put(keyVal, valueVal);
+                }
+            }
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
