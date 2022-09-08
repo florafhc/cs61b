@@ -92,7 +92,7 @@ public class Percolation {
     }
 
     /** Is the site (row, col) open? */
-    boolean isOpen(int row, int col) {
+    public boolean isOpen(int row, int col) {
         int index = twoToOne(row, col);
         // Deal with corner case
         if (row < 0 | row > size - 1) {
@@ -105,7 +105,7 @@ public class Percolation {
         return isOpen[index];
     }
     /** Is the site (row, col) full? */
-    boolean isFull(int row, int col) {
+    public boolean isFull(int row, int col) {
         int index = twoToOne(row, col);
         // Deal with corner case
         if (row < 0 | row > size - 1) {
@@ -153,12 +153,12 @@ public class Percolation {
     }
 
     /** Number of open sites */
-    int numberOfOpenSites() {
+    public int numberOfOpenSites() {
         return openNum;
     }
 
     /** Does the system percolate? */
-    boolean percolates() {
+    public boolean percolates() {
         return uf.find(bottom) == source;
     }
 
