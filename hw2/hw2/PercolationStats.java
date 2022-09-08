@@ -1,4 +1,4 @@
-package hw2;
+ package hw2;
 
 import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
@@ -22,7 +22,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(0, N);
                 uf.open(row, col);
             }
-            percolationPerc[i] = (double)uf.numberOfOpenSites() / (size * size);
+            percolationPerc[i] = (double) uf.numberOfOpenSites() / (size * size);
         }
     }
     /** Sample mean of percolation threshold */

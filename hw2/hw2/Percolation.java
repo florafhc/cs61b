@@ -19,15 +19,15 @@ public class Percolation {
     /** Create N-by-N grid, with all sites initially blocked */
     public Percolation(int N) {
         if (N <= 0) {
-            throw new IllegalArgumentException(" N must be a positive integer!");
+            throw new IndexOutOfBoundsException(" N must be a positive integer!");
         }
         size = N;
         openNum = 0;
-        bottom = N * N * 2;
-        uf = new WeightedQuickUnionUF(N * N * 2 + 1);
+        bottom = N * N * 3;
+        uf = new WeightedQuickUnionUF(N * N * 3 + 1);
 
         // initialize a virtual top site which secured to have the largest weight
-        for (int i = N * N; i < N * N * 2; i += 1) {
+        for (int i = N * N; i < N * N * 3; i += 1) {
             uf.union(N * N, i);
         }
         source = uf.find(N * N);
@@ -47,10 +47,10 @@ public class Percolation {
 
         // Deal with corner case
         if (row < 0 | row > size - 1) {
-            throw new IllegalArgumentException("indices of row is out of bound!");
+            throw new IndexOutOfBoundsException("indices of row is out of bound!");
         }
         if (col < 0 | col > size - 1) {
-            throw new IllegalArgumentException("indices of column is out of bound!");
+            throw new IndexOutOfBoundsException("indices of column is out of bound!");
         }
 
         if (!isOpen(row, col)) {
@@ -58,7 +58,8 @@ public class Percolation {
             isOpen[index] = true;
             if (row == 0) {
                 uf.union(index, source);
-            } else if (row == size - 1) {
+            }
+            if (row == size - 1) {
                 uf.union(index, bottom);
             }
 
@@ -96,10 +97,10 @@ public class Percolation {
         int index = twoToOne(row, col);
         // Deal with corner case
         if (row < 0 | row > size - 1) {
-            throw new IllegalArgumentException("indices of row is out of bound!");
+            throw new IndexOutOfBoundsException("indices of row is out of bound!");
         }
         if (col < 0 | col > size - 1) {
-            throw new IllegalArgumentException("indices of column is out of bound!");
+            throw new IndexOutOfBoundsException("indices of column is out of bound!");
         }
 
         return isOpen[index];
@@ -109,10 +110,10 @@ public class Percolation {
         int index = twoToOne(row, col);
         // Deal with corner case
         if (row < 0 | row > size - 1) {
-            throw new IllegalArgumentException("indices of row is out of bound!");
+            throw new IndexOutOfBoundsException("indices of row is out of bound!");
         }
         if (col < 0 | col > size - 1) {
-            throw new IllegalArgumentException("indices of column is out of bound!");
+            throw new IndexOutOfBoundsException("indices of column is out of bound!");
         }
         return uf.find(index) == source;
 
@@ -168,7 +169,7 @@ public class Percolation {
     public static void main(String[] args) {
         Percolation p = new Percolation(10);
         int num;
-        num = p.twoToOne(1,0);
+        num = p.twoToOne(1, 0);
         System.out.println(num);
     }
 
