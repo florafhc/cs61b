@@ -114,8 +114,9 @@ public class Percolation {
         if (col < 0 | col > size - 1) {
             throw new IllegalArgumentException("indices of column is out of bound!");
         }
+        return uf.find(index) == source;
 
-
+        /**
         if (!percolates()) {
              if (uf.find(index) == source) {
                 isFull[index] = true;
@@ -148,7 +149,9 @@ public class Percolation {
                 }
             }
             return false;
+
         }
+         */
 
     }
 
