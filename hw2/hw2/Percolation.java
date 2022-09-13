@@ -8,7 +8,7 @@ public class Percolation {
     private int source; // denote the 1D num of the virtual water source
     private int bottom; // denote the 1D num of the virtual bottom
     private boolean[] isOpen; // denote the open status of each grid
-    private boolean[] isFull; // denote the full status of each grid
+    // private boolean[] isFull; // denote the full status of each grid
     private WeightedQuickUnionUF uf;
 
     /** Transform 2D point set to unique integer */
@@ -19,7 +19,7 @@ public class Percolation {
     /** Create N-by-N grid, with all sites initially blocked */
     public Percolation(int N) {
         if (N <= 0) {
-            throw new IndexOutOfBoundsException(" N must be a positive integer!");
+            throw new IllegalArgumentException(" N must be a positive integer!");
         }
         size = N;
         openNum = 0;
@@ -34,10 +34,10 @@ public class Percolation {
 
         // initialize all sites initially blocked
         isOpen = new boolean[N * N];
-        isFull = new boolean[N * N];
+        // isFull = new boolean[N * N];
         for (int i = 0; i < N * N; i += 1) {
             isOpen[i] = false;
-            isFull[i] = false;
+            // isFull[i] = false;
         }
     }
 
@@ -62,14 +62,20 @@ public class Percolation {
             if (row == size - 1) {
                 uf.union(index, bottom);
             }
-
             openConnect(row, col);
 
-
+            /**
+            if (row == size - 1) {
+                if (uf.find(index) == source) {
+                    uf.union(index, bottom);
+                }
+            }
+             */
         }
     }
     private void openConnect(int row, int col) {
         int index = twoToOne(row, col);
+
         if (row - 1 >= 0) {
             if (isOpen(row - 1, col)) {
                 uf.union(index, twoToOne(row - 1, col));
@@ -90,6 +96,7 @@ public class Percolation {
                 uf.union(index, twoToOne(row, col + 1));
             }
         }
+
     }
 
     /** Is the site (row, col) open? */
