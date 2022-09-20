@@ -72,9 +72,9 @@ public class Solver {
     /** Returns a sequence of WorldStates from the initial WorldState
      to the solution.*/
     public Iterable<WorldState> solution() {
-        WorldState[] stateList = new WorldState[moves()];
+        WorldState[] stateList = new WorldState[moves() + 1];
         SearchNode currentNode = finalNode;
-        for (int i = moves() - 1; i >= 0; i -= 1) {
+        for (int i = moves(); i >= 0; i -= 1) {
             stateList[i] = currentNode.worldstate;
             currentNode = currentNode.prevNode;
         }
