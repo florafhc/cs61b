@@ -119,7 +119,9 @@ public class Board implements WorldState{
         int diff = 0;
         for (int i = 0; i < size(); i += 1) {
             for (int j = 0; j < size(); j += 1) {
-                if (tileAt(i, j) != goal[i][j]) {
+                if (tileAt(i, j) == BLANK) {
+                    continue;
+                } else if (tileAt(i, j) != goal[i][j]) {
                     diff += 1;
                 }
             }
@@ -177,6 +179,10 @@ public class Board implements WorldState{
     }
     /** Returns true if this board's tile values are the same
      position as y's */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     @Override
     public boolean equals(Object y) {
         if (this == y) {

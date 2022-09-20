@@ -4,10 +4,10 @@ import edu.princeton.cs.algs4.MinPQ;
 import java.util.Arrays;
 
 public class Solver {
-    int stepCount;
-    MinPQ<SearchNode> moveSequence;
-    SearchNode finalNode;
-    boolean solved;
+    private int stepCount;
+    private MinPQ<SearchNode> moveSequence;
+    private SearchNode finalNode;
+    private boolean solved;
 
     private class SearchNode implements Comparable<SearchNode> {
         WorldState worldstate;
